@@ -1,3 +1,71 @@
-main {
+.homepage-cont {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    border: black solid 5px;
+}
 
+.home-sec-one {
+    width: 60%;
+    border: white solid 2px;
+}
+
+.home-sec-two {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 40%;
+    padding: 20px;
+    border: white solid 2px;
+}
+
+.history-slider {
+    margin-bottom: 20px;
+}
+
+.history-slider-on {
+    background: #1e1f25;
+    border-radius: 10px;
+}
+
+.history-slider ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.history-slider li {
+    display: inline-block;
+    font-weight: 600;
+    margin-right: 20px;
+    padding: 15px;
+}
+
+.twenty-game-history {
+    background: #1e1f25;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.twenty-game-history h1 {
+    margin: 0;
+    padding: 0;
+}
+
+.w-l-history-cont {
+    display: flex;
+}
+
+.twenty-game-kda-cont {
+    display: flex;
+    display: flex;
+}
+
+.box-two {
+    background: #1e1f25;
+    border-radius: 10px;
+    border: solid white 1px;
+    padding: 20px;
 }

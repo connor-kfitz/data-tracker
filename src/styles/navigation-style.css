@@ -1,14 +1,17 @@
-nav {
+.nav-container {
     display: flex;
     justify-content: space-between;
     font-size: 20px;
-    padding: 30px 10%;
+    max-width: 1200px;
+    padding: 20px 40px;
+    margin: 0px auto;
+    /* border: white solid 3px; */
 }
 
 .nav-logo-cont a {
     text-decoration: none;
+    font-weight: 800;
     color: #f8f8fa;
-
 }
 
 .nav-links-cont ul {
@@ -20,6 +23,7 @@ nav {
 .nav-links-cont li {
     display: inline-block;
     padding: 0px 20px;
+    transition: 4s;
 }
 
 .nav-links-cont li:hover {
