@@ -3,6 +3,16 @@ import "../styles/homepage-style.css";
 
 export default function Homepage() {
 
+    const [gameHistoryModeSelect, setGameHistoryModeSelect] = useState ('RankedSolo');
+
+    function setRankedSolo() {
+        setGameHistoryModeSelect('RankedSolo')
+    }
+
+    function setRankedFlex(){
+        setGameHistoryModeSelect('RankedFlex')
+    }
+
     return (
         <main>
             <div className="homepage-cont">
@@ -16,10 +26,10 @@ export default function Homepage() {
                     </div> 
                 </section>
                 <section className="home-sec-two">
-                    <div class="history-slider">
+                    <div className="history-slider">
                         <ul>
-                            <li className="history-slider-on">Ranked Solo</li>
-                            <li>Ranked Flex</li>                     
+                            <li className= {gameHistoryModeSelect === "RankedSolo" ? "history-slider-on" : "history-slider-off"} onClick={setRankedSolo}>Ranked Solo</li>
+                            <li className={gameHistoryModeSelect === "RankedFlex" ? "history-slider-on" : "history-slider-off"} onClick={setRankedFlex}>Ranked Flex</li>                     
                         </ul>
                     </div>
                     <div className="twenty-game-history">

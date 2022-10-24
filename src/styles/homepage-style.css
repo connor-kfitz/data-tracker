@@ -30,9 +30,22 @@
     margin-bottom: 20px;
 }
 
+.history-slider-off {
+    border-radius: 10px;
+}
+
 .history-slider-on {
     background: #1e1f25;
     border-radius: 10px;
+    transition: 0.2s;
+}
+
+.history-slider-off:hover {
+    cursor: pointer;
+}
+
+.history-slider-on:hover {
+    cursor: pointer;
 }
 
 .history-slider ul{
