@@ -1,40 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/homepage-style.css";
 
 export default function Homepage() {
 
     return (
         <main>
-            <div class="homepage-cont">
-                <section class="home-sec-one">
+            <div className="homepage-cont">
+                <section className="home-sec-one">
                     <div>
                         <h1>Hello, Monkae!</h1>
                         <p>Some text about something</p> 
+                    </div>
+                    <div className="match-history">
+                        <div>Test</div>
                     </div> 
                 </section>
-                <section class="home-sec-two">
+                <section className="home-sec-two">
                     <div class="history-slider">
                         <ul>
-                            <li class="history-slider-on">Ranked Solo</li>
+                            <li className="history-slider-on">Ranked Solo</li>
                             <li>Ranked Flex</li>                     
                         </ul>
                     </div>
-                    <div class="twenty-game-history">
+                    <div className="twenty-game-history">
                         <h1>20 Game History</h1>
                         <div>Wins: 0 Loses: 0</div>
-                        <div class="twenty-game-kda-cont">
-                            <div class="twenty-game-stat">
+                        <div className="twenty-game-kda-cont">
+                            <div className="twenty-game-stat">
                                 <div>10/10/10</div>
                                 <div>KDA</div>
                                 <div>P/Kill 62%</div>
                             </div>
-                            <div class="twenty-game-graph">
+                            <div className="twenty-game-graph">
                                <div>Chart will go here</div> 
                             </div>
                         </div>
                     </div>
-                    <div class="box-two">
-                        Box Two
+                    <div className="preferred-position">
+                        <h1>Preferred Position</h1>
+                        <div className="preferred-position-chart-cont">
+
+                        </div>
                     </div>
                 </section>
 

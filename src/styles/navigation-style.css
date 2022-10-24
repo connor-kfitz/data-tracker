@@ -1,3 +1,7 @@
+nav {
+    margin-bottom: 40px;
+}
+
 .nav-container {
     display: flex;
     justify-content: space-between;
