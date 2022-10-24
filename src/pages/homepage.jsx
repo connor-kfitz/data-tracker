@@ -1,13 +1,14 @@
 import React, { useState } from "react";
+import Axios from 'axios';
 import "../styles/homepage-style.css";
 
-const apiKey = "RGAPI-fa6e643a-92ab-4791-9803-0db80f3cfcc1"
+const apiKey = "RGAPI-9c2f6b68-2a4d-4f1d-8889-bb3d0b7126ed"
 
 async function fetchName(name){
-    const link = `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${apiKey}`
-    const response = await fetch(link);
-    let data = await response.json();
-    console.log(data);
+    Axios.get(`https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${apiKey}`).then((response) => {
+        console.log(response)
+    })
+
 }
 
 export default function Homepage() {
