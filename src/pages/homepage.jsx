@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import "../styles/homepage-style.css";
 
+const apiKey = "RGAPI-fa6e643a-92ab-4791-9803-0db80f3cfcc1"
+
+async function fetchName(name){
+    const link = `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${apiKey}`
+    const response = await fetch(link);
+    let data = await response.json();
+    console.log(data);
+}
+
 export default function Homepage() {
 
     const [gameHistoryModeSelect, setGameHistoryModeSelect] = useState ('RankedSolo');
@@ -12,6 +21,8 @@ export default function Homepage() {
     function setRankedFlex(){
         setGameHistoryModeSelect('RankedFlex')
     }
+
+    fetchName('Yolah');
 
     return (
         <main>
