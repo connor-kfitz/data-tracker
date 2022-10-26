@@ -11,53 +11,11 @@ var matchId = "NA1_4473673180";
 
 export default function Homepage() {
 
-    // const getPUUID = () => {
-    //     axios.get(`https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${apiKey}`)
-    //         .then(response => {
-    //             setPUUID(response.data.puuid)
-    //         }).catch(err => {
-    //             console.log(err)
-    //         })
-    // }
-
-    // const getMatchIds = () => {
-    //     axios.get(`https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${PUUID}/ids?start=0&count=5&api_key=${apiKey}`)
-    //     .then((response) => {
-    //         setMatchIds(response.data)
-    //     }).catch(err => {
-    //         console.log(err)
-    //     })
-    // }
-
-
-
-
-
-
-    // const getMatchInfo = (matchesArray) => {
-
-    //     Promise.all(
-    //     matchesArray.map((id) =>{
-
-    //         axios.get(`https://americas.api.riotgames.com/lol/match/v5/matches/${id}?api_key=${apiKey}`)
-    //         .then((response) => {
-    //             data.push(response)
-    //         }).catch(err => {
-    //             console.log(err)
-    //         })
-    //     })
-    //     )    
-    // }
-
-
-
     const [gameHistoryModeSelect, setGameHistoryModeSelect] = useState ('RankedSolo');
     const [PUUID, setPUUID] = useState('');
     const [matchIds, setMatchIds] = useState([]);
 
-
-
-    const testFunction = async() => {
+    const getData = async() => {
 
         const getPUUID = await (axios.get(`https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${apiKey}`));
         setPUUID(getPUUID.data.puuid);
@@ -68,14 +26,8 @@ export default function Homepage() {
 
     }
 
-
-
-
-
-
-
     useEffect(() => {
-        testFunction();
+        getData();
     },[])
 
     useEffect(() => {
@@ -108,7 +60,6 @@ export default function Homepage() {
                             <SingleGameHistory gameData={game}/>        
                     ))}
 
-    
                     </div> 
                 </section>
                 <section className="home-sec-two">
