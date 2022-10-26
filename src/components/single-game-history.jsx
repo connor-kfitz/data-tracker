@@ -11,7 +11,11 @@ export default function SingleGameHistory(props) {
     const [mapData, setMapData] = useState();
     const [gameTypeData, setGameTypeData] = useState();
 
-    const [gameType, setGameType] = useState('')
+    const [gameType, setGameType] = useState('');
+    const [matchResult, setMatchResult] = useState('');
+
+    const [blueTeam, setBlueTeam] = useState();
+    const [redTeam, setRedTeam] = useState();
 
     const getGameData = async() => {
 
@@ -26,17 +30,35 @@ export default function SingleGameHistory(props) {
     }
 
     function getGameMode() {
-        // console.log(gameTypeData)
-        // console.log(matchData.info.queueId)
         for(var i=0; i < gameTypeData.data.length; i++){
-            // console.log(gameTypeData.data[i].queueId)
             if(gameTypeData.data[i].queueId == matchData.info.queueId){
-                // console.log('true')
-                // console.log(gameTypeData.data[i].description)
-                // return(gameTypeData.data[i].description)
                 setGameType(gameTypeData.data[i].description)
             }
         }
+    }
+
+    function getTeams() {
+        var blueTeam = []
+        var redTeam =[]
+        console.log(matchData.info.participants)
+        for(var i=0; i < 5; i++){
+            blueTeam.push(matchData.info.participants[i])
+        }
+        for(var i=4; i < 10; i++){
+            redTeam.push(matchData.info.participants[i])
+        }
+        setBlueTeam(blueTeam);
+        setRedTeam(redTeam);
+    }
+
+    function getNames()
+
+    function getPlayerMatchInfo() {
+
+    }
+
+    function getMatchResult(team) {
+
     }
 
     useEffect(() => {
@@ -45,19 +67,19 @@ export default function SingleGameHistory(props) {
 
     useEffect(() => {
         if((matchData) && (gameTypeData)){
-            // console.log(gameTypeData)
             getGameMode();
+            getTeams()
         }
 
     },[matchData, gameTypeData])
 
-    return (
 
+    return (
         (matchData ? (
         <div className="history-container">
             <div className="history-cont-one">
                 <h1>{gameType}</h1>
-                <div>Defeat</div>
+                <div>{matchResult}</div>
                 <div>20m 33s</div>
             </div>
             <div className="history-cont-two">
@@ -119,7 +141,7 @@ export default function SingleGameHistory(props) {
                         <div>
                             <img></img>
                         </div>
-                        <div>Name</div>
+                        <div></div>
                     </div>
                     <div>
                         <div>
@@ -151,7 +173,7 @@ export default function SingleGameHistory(props) {
                         <div>
                             <img></img>
                         </div>
-                        <div>Name</div>
+                        <div>Bame</div>
                     </div>
                     <div>
                         <div>
