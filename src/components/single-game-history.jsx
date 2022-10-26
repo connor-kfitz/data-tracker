@@ -17,6 +17,9 @@ export default function SingleGameHistory(props) {
     const [blueTeam, setBlueTeam] = useState();
     const [redTeam, setRedTeam] = useState();
 
+    const [blueNames, setBlueNames] = useState();
+    const [redNames, setRedNames] = useState();
+
     const getGameData = async() => {
 
         const getMatchData = await (axios.get(`https://americas.api.riotgames.com/lol/match/v5/matches/${props.gameData}?api_key=${apiKey}`));
@@ -40,18 +43,28 @@ export default function SingleGameHistory(props) {
     function getTeams() {
         var blueTeam = []
         var redTeam =[]
-        console.log(matchData.info.participants)
         for(var i=0; i < 5; i++){
             blueTeam.push(matchData.info.participants[i])
         }
-        for(var i=4; i < 10; i++){
+        for(var i=5; i < 10; i++){
             redTeam.push(matchData.info.participants[i])
         }
         setBlueTeam(blueTeam);
         setRedTeam(redTeam);
     }
 
-    function getNames()
+    function getNames() {
+        var blueName = [];
+        var redName = [];
+        blueTeam.map((player) => {
+            blueName.push(player.summonerName);
+        })
+        redTeam.map((player) => {
+            redName.push(player.summonerName);
+        })
+        setBlueNames(blueName);
+        setRedNames(redName);
+    }
 
     function getPlayerMatchInfo() {
 
@@ -68,10 +81,18 @@ export default function SingleGameHistory(props) {
     useEffect(() => {
         if((matchData) && (gameTypeData)){
             getGameMode();
-            getTeams()
+            getTeams();
+            // getNames();
         }
 
     },[matchData, gameTypeData])
+
+    useEffect(() => {
+        if((blueTeam) && (redTeam)){
+            getNames();
+        }
+
+    },[blueTeam, redTeam])
 
 
     return (
@@ -137,68 +158,33 @@ export default function SingleGameHistory(props) {
             
             <div className="history-cont-four">
                 <div className="blue-team-cont">
-                    <div>
-                        <div>
-                            <img></img>
-                        </div>
-                        <div></div>
-                    </div>
-                    <div>
-                        <div>
-                            <img></img>
-                        </div>
-                        <div>Name</div>
-                    </div>
-                    <div>
-                        <div>
-                            <img></img>
-                        </div>
-                        <div>Name</div>
-                    </div>
-                    <div>
-                        <div>
-                            <img></img>
-                        </div>
-                        <div>Name</div>
-                    </div>
-                    <div>
-                        <div>
-                            <img></img>
-                        </div>
-                        <div>Name</div>
-                    </div>
+                    
+                    {(blueNames) ? (
+                            blueNames.map((player) => (
+                                <div>
+                                    <div>
+                                        <img></img>
+                                    </div>
+                                    <div>{player}</div>
+                                </div>
+
+                            ))
+                    ) : ( <div/>)}
+                    
+
                 </div>
                 <div className="red-team-cont">
-                    <div>
-                        <div>
-                            <img></img>
-                        </div>
-                        <div>Bame</div>
-                    </div>
-                    <div>
-                        <div>
-                            <img></img>
-                        </div>
-                        <div>Name</div>
-                    </div>
-                    <div>
-                        <div>
-                            <img></img>
-                        </div>
-                        <div>Name</div>
-                    </div>
-                    <div>
-                        <div>
-                            <img></img>
-                        </div>
-                        <div>Name</div>
-                    </div>
-                    <div>
-                        <div>
-                            <img></img>
-                        </div>
-                        <div>Name</div>
-                    </div>
+                {(redNames) ? (
+                            redNames.map((player) => (
+                                <div>
+                                    <div>
+                                        <img></img>
+                                    </div>
+                                    <div>{player}</div>
+                                </div>
+
+                            ))
+                    ) : ( <div/>)}
                 </div>
             </div>
         </div>
