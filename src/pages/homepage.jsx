@@ -2,54 +2,87 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import "../styles/homepage-style.css";
 
-const apiKey = "RGAPI-9c2f6b68-2a4d-4f1d-8889-bb3d0b7126ed";
+import SingleGameHistory from "../components/single-game-history";
+
+const apiKey = "RGAPI-08d7d2f3-dcbc-4884-ac36-e9f4cef5f79b";
 var name = 'Monkæ'
 var puuid = "FE-AkSKHlt5HekAajyo3q0vgmLtH-64IKMcNk50aWE0XInp4AUVwAfWHSqQZKB3DFOeszLf7O8ReNQ";
 var matchId = "NA1_4473673180";
 
 export default function Homepage() {
 
-    const getPUUID = () => {
-        axios.get(`https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${apiKey}`)
-            .then(response => {
-                setPUUID(response.data.puuid)
-            }).catch(err => {
-                console.log(err)
-            })
-    }
+    // const getPUUID = () => {
+    //     axios.get(`https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${apiKey}`)
+    //         .then(response => {
+    //             setPUUID(response.data.puuid)
+    //         }).catch(err => {
+    //             console.log(err)
+    //         })
+    // }
 
-    const getMatchIds = () => {
-        axios.get(`https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${PUUID}/ids?start=0&count=5&api_key=${apiKey}`)
-        .then((response) => {
-            setMatchIds(response.data)
-        }).catch(err => {
-            console.log(err)
-        })
-    }
+    // const getMatchIds = () => {
+    //     axios.get(`https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${PUUID}/ids?start=0&count=5&api_key=${apiKey}`)
+    //     .then((response) => {
+    //         setMatchIds(response.data)
+    //     }).catch(err => {
+    //         console.log(err)
+    //     })
+    // }
 
-    const getMatchInfo = (id) => {
-            axios.get(`https://americas.api.riotgames.com/lol/match/v5/matches/${id}?api_key=${apiKey}`)
-            .then((response) => {
-                setMatchData(current => [...current, response])
-                console.log('g')
-                console.log(matchData)
-            }).catch(err => {
-                console.log(err)
-            })
 
-    }
+
+
+
+
+    // const getMatchInfo = (matchesArray) => {
+
+    //     Promise.all(
+    //     matchesArray.map((id) =>{
+
+    //         axios.get(`https://americas.api.riotgames.com/lol/match/v5/matches/${id}?api_key=${apiKey}`)
+    //         .then((response) => {
+    //             data.push(response)
+    //         }).catch(err => {
+    //             console.log(err)
+    //         })
+    //     })
+    //     )    
+    // }
+
 
 
     const [gameHistoryModeSelect, setGameHistoryModeSelect] = useState ('RankedSolo');
     const [PUUID, setPUUID] = useState('');
     const [matchIds, setMatchIds] = useState([]);
-    const [matchData, setMatchData] = useState([]);
 
-    
+
+
+    const testFunction = async() => {
+
+        const getPUUID = await (axios.get(`https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${apiKey}`));
+        setPUUID(getPUUID.data.puuid);
+
+        const getMatchIds = await (axios.get(`https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${getPUUID.data.puuid}/ids?start=0&count=5&api_key=${apiKey}`));
+        setMatchIds(getMatchIds.data);
+        console.log(`These are the match IDS`);
+
+    }
+
+
+
+
+
+
+
     useEffect(() => {
-        getPUUID()
-        getMatchIds()
-    }, [])
+        testFunction();
+    },[])
+
+    useEffect(() => {
+        console.log(`These are the match IDS`);
+        console.log(PUUID)
+        console.log(matchIds)
+    },[matchIds])
 
 
     function setRankedSolo() {
@@ -67,132 +100,15 @@ export default function Homepage() {
                 <section className="home-sec-one">
                     <div>
                         <h1>Hello, Monkae!</h1>
-                        <p>Some text about something</p> 
+                        <p>Here is some of your match history...</p> 
                     </div>
                     <div className="match-history">
-                        <div>
-                            <h1>Flex 5:5 Rank</h1>
-                            <div>Defeat</div>
-                            <div>20m 33s</div>
-                        </div>
-                        <div>
-                            <div>
-                                <img></img>
-                            </div>
-                            <div>
-                                <div>
-                                    <img></img>
-                                </div>
-                                <div>
-                                    <img></img>
-                                </div>
-                                <div>
-                                    <img></img>
-                                </div>
-                                <div>
-                                    <img></img>
-                                </div>
-                            </div>
-                            <div>
-                                <div>0/4/0</div>
-                                <div>0:00:1 KDA</div>
-                            </div>
-                            <div>
-                                <div>
-                                    <img></img>
-                                </div>
-                                <div>
-                                    <img></img>
-                                </div>
-                                <div>
-                                    <img></img>
-                                </div>
-                                <div>
-                                    <img></img>
-                                </div>
-                                <div>
-                                    <img></img>
-                                </div>
-                                <div>
-                                    <img></img>
-                                </div>
-                                <div>
-                                    <img></img>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div>P/Kill 0%</div>
-                            <div>Control Ward 0</div>
-                            <div>CS 134 (6.5)</div>
-                            <div>Diamond 3</div>
-                        </div>
-                        <div>
-                            <div>
-                                <div>
-                                    <div>
-                                        <img></img>
-                                    </div>
-                                    <div>Name</div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <img></img>
-                                    </div>
-                                    <div>Name</div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <img></img>
-                                    </div>
-                                    <div>Name</div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <img></img>
-                                    </div>
-                                    <div>Name</div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <img></img>
-                                    </div>
-                                    <div>Name</div>
-                                </div>
-                            </div>
-                            <div>
-                                <div>
-                                    <div>
-                                        <img></img>
-                                    </div>
-                                    <div>Name</div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <img></img>
-                                    </div>
-                                    <div>Name</div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <img></img>
-                                    </div>
-                                    <div>Name</div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <img></img>
-                                    </div>
-                                    <div>Name</div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <img></img>
-                                    </div>
-                                    <div>Name</div>
-                                </div>
-                            </div>
-                        </div>
+                        
+                    {matchIds.map((game) => (
+                            <SingleGameHistory gameData={game}/>        
+                    ))}
+
+    
                     </div> 
                 </section>
                 <section className="home-sec-two">
