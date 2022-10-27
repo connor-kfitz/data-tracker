@@ -31,13 +31,10 @@ export default function Homepage() {
     },[])
 
     useEffect(() => {
-        // console.log(`These are the match IDS`);
-        // console.log(PUUID)
-        // console.log(matchIds)
+
     },[matchIds])
     
     useEffect(() => {
-        // console.log(summonerName);
     },[summonerName])
 
     function setRankedSolo() {

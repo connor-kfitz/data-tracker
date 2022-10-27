@@ -14,6 +14,7 @@ export default function SingleGameHistory(props) {
 
     const [gameType, setGameType] = useState('');
     const [matchResult, setMatchResult] = useState(false);
+    const [gameTime, setGameTime] = useState();
 
     const [blueTeam, setBlueTeam] = useState();
     const [redTeam, setRedTeam] = useState();
@@ -40,6 +41,12 @@ export default function SingleGameHistory(props) {
                 setGameType(gameTypeData.data[i].description)
             }
         }
+    }
+
+    function getGameTime() {
+        // console.log(matchData)
+        // console.log(Math.trunc(matchData.info.gameDuration / 60))
+        setGameTime((Math.trunc(matchData.info.gameDuration / 60)));
     }
 
     function getTeams() {
@@ -96,6 +103,7 @@ export default function SingleGameHistory(props) {
             getGameMode();
             getTeams();
             getWinningTeam();
+            getGameTime();
         }
 
     },[matchData, gameTypeData])
@@ -122,7 +130,7 @@ export default function SingleGameHistory(props) {
             <div className="history-cont-one">
                 <h1>{gameType}</h1>
                 <div>{matchResult ? (<div>Victory</div>) : (<div>Defeat</div>)}</div>
-                <div>20m 33s</div>
+                <div>{gameTime} Minutes</div>
             </div>
             <div className="history-cont-two">
                 <div>
