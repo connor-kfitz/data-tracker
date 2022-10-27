@@ -16,9 +16,10 @@ export default function SingleGameHistory(props) {
     const [matchResult, setMatchResult] = useState(false);
     const [gameTime, setGameTime] = useState();
 
+    const [playerMatchData, setPlayerMatchdata] = useState();
+
     const [blueTeam, setBlueTeam] = useState();
     const [redTeam, setRedTeam] = useState();
-
     const [blueNames, setBlueNames] = useState();
     const [redNames, setRedNames] = useState();
 
@@ -44,8 +45,6 @@ export default function SingleGameHistory(props) {
     }
 
     function getGameTime() {
-        // console.log(matchData)
-        // console.log(Math.trunc(matchData.info.gameDuration / 60))
         setGameTime((Math.trunc(matchData.info.gameDuration / 60)));
     }
 
@@ -94,6 +93,23 @@ export default function SingleGameHistory(props) {
         setRedNames(redName);
     }
 
+    function getPlayerMatchData() {
+        blueNames.map((player, index) => {
+            if(player == props.summonerName){
+                console.log(index);
+                setPlayerMatchdata(blueTeam[index])
+            }   
+        })
+
+        redNames.map((player, index) => {
+            if(player == props.summonerName){
+                console.log(index);
+                setPlayerMatchdata(redTeam[index])
+                console.log(playerMatchData)
+            }   
+        })
+    }
+
     useEffect(() => {
         getGameData()
     },[])
@@ -111,7 +127,6 @@ export default function SingleGameHistory(props) {
     useEffect(() => {
         if((blueTeam) && (redTeam)){
             getNames();
-
         }
 
     },[blueTeam, redTeam])
@@ -119,6 +134,7 @@ export default function SingleGameHistory(props) {
     useEffect(() => {
         if((blueNames) && (redNames)){
             checkPlayerWin();
+            getPlayerMatchData();
         }
 
     },[blueNames, redNames])
@@ -151,7 +167,7 @@ export default function SingleGameHistory(props) {
                     </div>
                 </div>
                 <div>
-                    <div>0/4/0</div>
+                    <div>{playerMatchData.kills}/{playerMatchData.deaths}/{playerMatchData.assists}</div>
                     <div>0:00:1 KDA</div>
                 </div>
                 <div>
@@ -189,8 +205,8 @@ export default function SingleGameHistory(props) {
                 <div className="blue-team-cont">
                     
                     {(blueNames) ? (
-                            blueNames.map((player) => (
-                                <div>
+                            blueNames.map((player, index) => (
+                                <div key={index}>
                                     <div>
                                         <img></img>
                                     </div>
@@ -204,8 +220,8 @@ export default function SingleGameHistory(props) {
                 </div>
                 <div className="red-team-cont">
                 {(redNames) ? (
-                            redNames.map((player) => (
-                                <div>
+                            redNames.map((player, index) => (
+                                <div key={index}>
                                     <div>
                                         <img></img>
                                     </div>
