@@ -96,14 +96,12 @@ export default function SingleGameHistory(props) {
     function getPlayerMatchData() {
         blueNames.map((player, index) => {
             if(player == props.summonerName){
-                console.log(index);
                 setPlayerMatchdata(blueTeam[index])
             }   
         })
 
         redNames.map((player, index) => {
             if(player == props.summonerName){
-                console.log(index);
                 setPlayerMatchdata(redTeam[index])
                 console.log(playerMatchData)
             }   
@@ -141,7 +139,8 @@ export default function SingleGameHistory(props) {
 
 
     return (
-        (matchData ? (
+        
+        (playerMatchData ? (
         <div className="history-container">
             <div className="history-cont-one">
                 <h1>{gameType}</h1>
