@@ -4,23 +4,26 @@ import "../styles/homepage-style.css";
 
 import SingleGameHistory from "../components/single-game-history";
 
-const apiKey = "RGAPI-08d7d2f3-dcbc-4884-ac36-e9f4cef5f79b";
+const apiKey = "RGAPI-d2fb1e37-ddcb-4f9f-85a2-0f6949f3b81b";
 var name = 'Monkæ'
 
 
 export default function Homepage() {
 
     const [gameHistoryModeSelect, setGameHistoryModeSelect] = useState ('RankedSolo');
-    const [PUUID, setPUUID] = useState()
+    const [PUUID, setPUUID] = useState();
     const [matchIds, setMatchIds] = useState([]);
+    const [summonerName, setSummonerName] = useState();
 
     const getData = async() => {
 
         const getPUUID = await (axios.get(`https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${apiKey}`));
         setPUUID(getPUUID);
+        setSummonerName(getPUUID.data.name)
 
         const getMatchIds = await (axios.get(`https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${getPUUID.data.puuid}/ids?start=0&count=5&api_key=${apiKey}`));
         setMatchIds(getMatchIds.data);
+
     }
 
     useEffect(() => {
@@ -32,7 +35,10 @@ export default function Homepage() {
         // console.log(PUUID)
         // console.log(matchIds)
     },[matchIds])
-
+    
+    useEffect(() => {
+        // console.log(summonerName);
+    },[summonerName])
 
     function setRankedSolo() {
         setGameHistoryModeSelect('RankedSolo')
@@ -54,7 +60,7 @@ export default function Homepage() {
                     <div className="match-history">
                         
                     {matchIds.map((game, key) => (
-                            <SingleGameHistory gameData={game} puuid={PUUID} key={key}/>        
+                            <SingleGameHistory gameData={game} summonerName={summonerName} puuid={PUUID} key={key}/>        
                     ))}
 
                     </div> 

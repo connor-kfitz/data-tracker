@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import "../styles/single-game-history-style.css";
 
-const apiKey = "RGAPI-08d7d2f3-dcbc-4884-ac36-e9f4cef5f79b";
+var name = 'Monkæ'
+const apiKey = "RGAPI-d2fb1e37-ddcb-4f9f-85a2-0f6949f3b81b";
 
 
 export default function SingleGameHistory(props) {
@@ -12,7 +13,7 @@ export default function SingleGameHistory(props) {
     const [gameTypeData, setGameTypeData] = useState();
 
     const [gameType, setGameType] = useState('');
-    const [matchResult, setMatchResult] = useState('');
+    const [matchResult, setMatchResult] = useState(false);
 
     const [blueTeam, setBlueTeam] = useState();
     const [redTeam, setRedTeam] = useState();
@@ -30,6 +31,7 @@ export default function SingleGameHistory(props) {
 
         const getGameTypeData = await (axios.get(`https://static.developer.riotgames.com/docs/lol/queues.json`));
         setGameTypeData(getGameTypeData);
+
     }
 
     function getGameMode() {
@@ -53,6 +55,25 @@ export default function SingleGameHistory(props) {
         setRedTeam(redTeam);
     }
 
+    function getWinningTeam() {
+        if(matchData.info.teams[0].win == true){
+            return(true);
+        }
+    }
+
+    function checkPlayerWin() {
+        if(blueNames.includes(props.summonerName)) {
+            if(getWinningTeam()) {
+                setMatchResult(true)
+            }
+        }
+        if(redNames.includes(props.summonerName)) {
+            if(!getWinningTeam()) {
+                setMatchResult(true)
+            }
+        }
+    }
+
     function getNames() {
         var blueName = [];
         var redName = [];
@@ -66,14 +87,6 @@ export default function SingleGameHistory(props) {
         setRedNames(redName);
     }
 
-    function getPlayerMatchInfo() {
-
-    }
-
-    function getMatchResult(team) {
-
-    }
-
     useEffect(() => {
         getGameData()
     },[])
@@ -82,7 +95,7 @@ export default function SingleGameHistory(props) {
         if((matchData) && (gameTypeData)){
             getGameMode();
             getTeams();
-            // getNames();
+            getWinningTeam();
         }
 
     },[matchData, gameTypeData])
@@ -90,9 +103,17 @@ export default function SingleGameHistory(props) {
     useEffect(() => {
         if((blueTeam) && (redTeam)){
             getNames();
+
         }
 
     },[blueTeam, redTeam])
+
+    useEffect(() => {
+        if((blueNames) && (redNames)){
+            checkPlayerWin();
+        }
+
+    },[blueNames, redNames])
 
 
     return (
@@ -100,7 +121,7 @@ export default function SingleGameHistory(props) {
         <div className="history-container">
             <div className="history-cont-one">
                 <h1>{gameType}</h1>
-                <div>{matchResult}</div>
+                <div>{matchResult ? (<div>Victory</div>) : (<div>Defeat</div>)}</div>
                 <div>20m 33s</div>
             </div>
             <div className="history-cont-two">
