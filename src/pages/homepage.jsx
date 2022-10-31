@@ -4,9 +4,8 @@ import "../styles/homepage-style.css";
 
 import SingleGameHistory from "../components/single-game-history";
 
-const apiKey = "RGAPI-d2fb1e37-ddcb-4f9f-85a2-0f6949f3b81b";
+const apiKey = process.env.REACT_APP_riotApiKey;
 var name = 'Monkæ'
-
 
 export default function Homepage() {
 

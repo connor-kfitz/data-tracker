@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
+import process from 'react-dotenv';
+
 import "../styles/single-game-history-style.css";
 
 var name = 'Monkæ'
-const apiKey = "RGAPI-d2fb1e37-ddcb-4f9f-85a2-0f6949f3b81b";
+const apiKey = process.env.REACT_APP_riotApiKey;
+
 
 
 export default function SingleGameHistory(props) {
@@ -23,6 +26,8 @@ export default function SingleGameHistory(props) {
     const [blueNames, setBlueNames] = useState();
     const [redNames, setRedNames] = useState();
 
+    const [info, setInfo] = useState();
+
     const getGameData = async() => {
 
         const getMatchData = await (axios.get(`https://americas.api.riotgames.com/lol/match/v5/matches/${props.gameData}?api_key=${apiKey}`));
@@ -33,6 +38,11 @@ export default function SingleGameHistory(props) {
 
         const getGameTypeData = await (axios.get(`https://static.developer.riotgames.com/docs/lol/queues.json`));
         setGameTypeData(getGameTypeData);
+
+        const getInfo = await (axios.get(`http://ddragon.leagueoflegends.com/cdn/12.20.1/data/en_US/profileicon.json`));
+        setInfo(getInfo);
+
+        const getSummonerSpells = await (axios.get(`http://ddragon.leagueoflegends.com/cdn/12.20.1/data/en_US/profileicon.json`));
 
     }
 
@@ -113,6 +123,10 @@ export default function SingleGameHistory(props) {
     },[])
 
     useEffect(() => {
+        console.log(info)
+    },[info])
+
+    useEffect(() => {
         if((matchData) && (gameTypeData)){
             getGameMode();
             getTeams();
@@ -167,7 +181,7 @@ export default function SingleGameHistory(props) {
                 </div>
                 <div>
                     <div>{playerMatchData.kills}/{playerMatchData.deaths}/{playerMatchData.assists}</div>
-                    <div>0:00:1 KDA</div>
+                    <div>{Math.trunc(playerMatchData.kills + playerMatchData.assists / playerMatchData.deaths)}:1 KDA</div>
                 </div>
                 <div>
                     <div>
@@ -194,10 +208,9 @@ export default function SingleGameHistory(props) {
                 </div>
             </div>
             <div className="history-cont-three">
-                <div>P/Kill 0%</div>
-                <div>Control Ward 0</div>
-                <div>CS 134 (6.5)</div>
-                <div>Diamond 3</div>
+                <div>P/Kill {}%</div>
+                <div>Control Wards {playerMatchData.challenges.controlWardsPlaced}</div>
+                <div>{playerMatchData.totalMinionsKilled} ({Math.trunc(playerMatchData.totalMinionsKilled / gameTime)})</div>
             </div>
             
             <div className="history-cont-four">
